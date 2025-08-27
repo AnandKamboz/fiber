@@ -11,7 +11,6 @@ import (
 )
 
 func main() {
-	// Database connect
 	database.Connect()
 
 	// Table create (AutoMigrate)
