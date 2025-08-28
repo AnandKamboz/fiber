@@ -1,23 +1,27 @@
 package controllers
 
 import (
+    "fmt"            
     "fiber-app/database"
     "fiber-app/models"
+    
     "github.com/gofiber/fiber/v2"
 )
 
-func CreateUser(c *fiber.Ctx) error {
-    user := new(models.User)
 
-    user.Name = c.FormValue("name")
-    user.Email = c.FormValue("email")
-    user.Password = c.FormValue("password")
+func UserView(c *fiber.Ctx) error {
+	id := c.Params("id")
+	fmt.Println("User ID:", id)
 
-	
-    result := database.DB.Create(&user)
-    if result.Error != nil {
-        return c.Status(500).SendString(result.Error.Error())
-    }
+	var user models.User
+	result := database.DB.First(&user, id)
+	if result.Error != nil {
+		return c.Status(404).SendString("User not found")
+	}
 
-    return c.SendString("✅ User Saved Successfully")
+	return c.Render("view", fiber.Map{
+		"Title": "User View • Fiber App",
+		"User":  user,
+	}, "layout")
 }
+

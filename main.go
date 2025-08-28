@@ -5,9 +5,11 @@ import (
 
 	"fiber-app/models"
 	"fiber-app/database"
+	"fiber-app/routes"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/template/html/v2"
+	
 )
 
 func main() {
@@ -62,6 +64,7 @@ func main() {
 			return c.Redirect("/create?success=1")
 	})
 
-
+	
+	routes.SetupRoutes(app)
 	log.Fatal(app.Listen(":3000"))
 }

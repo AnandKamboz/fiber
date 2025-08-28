@@ -1,23 +1,26 @@
 package routes
 
 import (
-	"fiber-app/database"
-	"fiber-app/models"
-
+	"fiber-app/controllers"
 	"github.com/gofiber/fiber/v2"
-	"github.com/google/uuid"
 )
+
+
 
 func SetupRoutes(app *fiber.App) {
 
-	// Home page
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.Render("index", fiber.Map{
-			"Title": "🚀 Fiber App is running!",
-			"Name":  "Anand",
+	app.Get("/about", func(c *fiber.Ctx) error {
+		return c.Render("about", fiber.Map{
+			"Title": "About • Fiber App",
 		}, "layout")
 	})
+
+	app.Get("/users/:id", controllers.UserView)
+
+
 }
+
+
 
 
 
