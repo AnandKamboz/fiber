@@ -25,3 +25,18 @@ func UserView(c *fiber.Ctx) error {
 	}, "layout")
 }
 
+// func DeleteUser(c *fiber.Ctx) error {
+// 	id :c.Params("id")
+// 	var user models.User
+// 	result := database.DB.First(&user, id)
+
+// }
+
+
+func DeleteUser(c *fiber.Ctx) error {
+	id := c.Params("id")
+	if err := database.DB.Delete(&models.User{}, id).Error; err != nil {
+		return c.Status(500).JSON(fiber.Map{"error": err.Error()})
+	}
+	return c.SendStatus(204) 
+}
